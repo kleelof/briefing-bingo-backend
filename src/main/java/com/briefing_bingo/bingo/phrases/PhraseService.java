@@ -24,7 +24,17 @@ public class PhraseService {
         return this.repository.findAll();
     }
 
+    public List<Phrase> getRandomPhrases(Integer count) {
+        List<Phrase> phrases = this.repository.getRandomPhrases(count);
+        phrases.forEach(phrase -> this.repository.updateCount(phrase.getId()));
+        return this.repository.getRandomPhrases(count);
+    }
+
     public Phrase save(Phrase phrase) {
         return this.repository.save(phrase);
+    }
+
+    public void setChecked(Long id, Boolean checked) {
+        this.repository.updateCheckedCount(id, checked == true ? 1 : -1);
     }
 }
