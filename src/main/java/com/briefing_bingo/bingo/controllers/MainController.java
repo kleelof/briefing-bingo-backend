@@ -10,6 +10,6 @@ public class MainController {
 
     @GetMapping("/")
     public String index() {
-        return "index.jsp";
+        return "frontend.jsp";
     }
 }
