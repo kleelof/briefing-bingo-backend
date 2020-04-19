@@ -68,6 +68,9 @@ z-index: 1;
 -webkit-text-stroke-width: 1px;
 -webkit-text-stroke-color: black;
 }
+a {
+  font-size: 5em;
+}
 
 .marker { 
 position: relative;

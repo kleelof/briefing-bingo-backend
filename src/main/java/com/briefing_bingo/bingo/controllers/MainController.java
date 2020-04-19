@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("")
@@ -29,11 +31,15 @@ public class MainController {
     public ModelAndView displayBingoCard(@PathVariable("playId") String playId) {
         Optional<Card> O = cardService.findCardByPlayId(playId);
 
-        if (O.isPresent()) {
-            System.out.println(O.get().getCheckedPhraseIDs());
+        if (O.isPresent()) 
             return new ModelAndView("displayBingoCard.jsp", "card", O.get());
-        }
         
         return new ModelAndView("frontend.jsp");
     }
+
+    @GetMapping("/close")
+    public String closeShareWindow() {
+        return "closeMe.jsp";
+    }
+    
 }

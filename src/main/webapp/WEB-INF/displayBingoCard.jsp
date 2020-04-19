@@ -11,12 +11,22 @@
     <link rel="stylesheet" href="/css/displayBingoCard.css" />
 </head>
 <body>
+    <div style="display: none">
+        <img src="/images/iWon.png" alt="IWon" />
+    </div>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-12 text-center">
-                <img src="/images/iGotBingo.png" alt="I GotBingo"/>
-            </div>
             <div class="col-12 col-md-7">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>YOUR FRIEND WON!!! YOU CAN DO!!</h1>
+                    </div>
+                    <div class="col-12 text-center">
+                        <a href="http://www.briefingbingo.com">
+                            PLAY NOW!
+                        </a>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="grid">
                         <c:forEach var="phrase" items="${card.phrases}" varStatus="loop">
@@ -43,11 +53,6 @@
                                 </div>
                             </div>
                         </c:forEach>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <a href="www.briefingbingo.com">PLAY!</a>
                     </div>
                 </div>
             </div>
