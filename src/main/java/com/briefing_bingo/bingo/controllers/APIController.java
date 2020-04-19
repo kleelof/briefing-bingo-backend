@@ -2,6 +2,7 @@ package com.briefing_bingo.bingo.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.briefing_bingo.bingo.card.BingoDTO;
 import com.briefing_bingo.bingo.card.CardDTO;
 import com.briefing_bingo.bingo.card.CardService;
 import com.briefing_bingo.bingo.phrases.PhraseService;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
@@ -45,9 +48,9 @@ public class APIController {
         return ResponseEntity.ok().body("ok");
     }
 
-    @GetMapping("/setBingo/{playId}")
-    public ResponseEntity<?> setBingo(@PathVariable("playId") String playId) {
-        this.cardService.setBingo(playId);
+    @PostMapping("/setBingo")
+    public ResponseEntity<?> setBingo(@RequestBody BingoDTO DTO) {
+        this.cardService.setBingo(DTO.getPlayId(), DTO.getCheckedPhraseIDs());
         return ResponseEntity.ok().body("ok");
     }
 }

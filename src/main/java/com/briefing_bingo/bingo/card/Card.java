@@ -3,10 +3,12 @@ package com.briefing_bingo.bingo.card;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.*;
 
+import com.briefing_bingo.bingo.IntArrayToStringConverter;
 import com.briefing_bingo.bingo.phrases.Phrase;
 
 import lombok.Data;
@@ -35,8 +37,10 @@ public class Card {
         joinColumns = @JoinColumn(name = "card_id"),
         inverseJoinColumns = @JoinColumn(name = "phrase_id")
     )
-    
     private Collection<Phrase> phrases = new ArrayList<>();
+
+    @Convert(converter = IntArrayToStringConverter.class)
+    private List<Integer> checkedPhraseIDs;
 
     private Boolean hasBingo;
     private String playId;

@@ -42,7 +42,7 @@ public class CardService {
         return this.repository.confirmPlayId(playId);
     }
 
-    public Card findCardByPlayId(String playId) {
+    public Optional<Card> findCardByPlayId(String playId) {
         return this.repository.findCardByPlayId(playId);
     }
 
@@ -58,7 +58,14 @@ public class CardService {
         return this.repository.save(card);
     }
 
-    public void setBingo(String playId) {
-        this.repository.setBingo(playId);
+    public void setBingo(String playId, List<Integer> checkedPhraseIDs) {
+
+        Optional<Card> O = this.repository.findCardByPlayId(playId);
+        if (O.isPresent()) {
+            Card card = O.get();
+            card.setHasBingo(true);
+            card.setCheckedPhraseIDs(checkedPhraseIDs);
+            this.repository.save(card);
+        }
     }
 }

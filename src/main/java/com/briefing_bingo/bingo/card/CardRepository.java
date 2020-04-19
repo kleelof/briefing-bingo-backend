@@ -1,5 +1,7 @@
 package com.briefing_bingo.bingo.card;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +14,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     public boolean confirmPlayId(String playId);
 
     @Query("FROM Card c WHERE c.playId = ?1")
-    public Card findCardByPlayId(String playId);
+    public Optional<Card> findCardByPlayId(String playId);
     
     @Modifying
     @Transactional
