@@ -19,10 +19,10 @@
             <div class="col-12 col-md-7">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h1>YOUR FRIEND WON!!! YOU CAN DO!!</h1>
+                        <h3>YOUR FRIEND WON!!! YOU CAN TOO!!</h3>
                     </div>
                     <div class="col-12 text-center">
-                        <a href="http://www.briefingbingo.com">
+                        <a href="http://www.briefingbingo.com" class="btn btn-success">
                             PLAY NOW!
                         </a>
                     </div>

@@ -12,6 +12,10 @@ public class PhraseService {
     @Autowired
     private PhraseRepository repository;
 
+    public void activate(Long id) {
+        this.repository.activate(id);
+    }
+    
     public void delete(Long id) {
         Optional<Phrase> O = this.repository.findById(id);
 
@@ -20,8 +24,16 @@ public class PhraseService {
         }
     }
 
+    public void deactivate(Long id) {
+        this.repository.deactivate(id);
+    }
+
     public List<Phrase> findAll() {
         return this.repository.findAll();
+    }
+
+    public List<Phrase> findAllAlphabetical() {
+        return this.repository.findAllAlphabetical();
     }
 
     public List<Phrase> getRandomPhrases(Integer count) {
@@ -36,5 +48,9 @@ public class PhraseService {
 
     public void setChecked(Long id, Boolean checked) {
         this.repository.updateCheckedCount(id, checked == true ? 1 : -1);
+    }
+
+    public void updatePhrase(Long id, String newPhrase) {
+        this.repository.updatePhrase(id, newPhrase);
     }
 }

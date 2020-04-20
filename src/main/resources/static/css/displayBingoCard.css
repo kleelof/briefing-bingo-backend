@@ -69,13 +69,13 @@ z-index: 1;
 -webkit-text-stroke-color: black;
 }
 a {
-  font-size: 5em;
+  font-size: 2em !important;
 }
 
 .marker { 
 position: relative;
-top: 50px;
-left: 30px;
+top: 40px;
+left: 15px;
 font-size: 9vh;
 font-weight: bold;
 color: rgb(230, 17, 17);
@@ -97,6 +97,8 @@ z-index: 1;
   
     .marker {
       font-size: 17vh;
+      top: 50px;
+      left: 30px;
     }
   
     .viewPhrase {

@@ -42,6 +42,10 @@ public class CardService {
         return this.repository.confirmPlayId(playId);
     }
 
+    public List<Card> findAll() {
+        return this.repository.findAll();
+    }
+    
     public Optional<Card> findCardByPlayId(String playId) {
         return this.repository.findCardByPlayId(playId);
     }
@@ -52,6 +56,10 @@ public class CardService {
         if (O.isPresent()) {
             this.repository.delete(O.get());
         }
+    }
+
+    public CardStatsDTO getStats() {
+        return new CardStatsDTO(this.repository.getNumberOfCardsIssued(), this.repository.getBingoCount(), this.repository.getSharedCount());
     }
 
     public Card save(Card card) {
@@ -67,5 +75,9 @@ public class CardService {
             card.setCheckedPhraseIDs(checkedPhraseIDs);
             this.repository.save(card);
         }
+    }
+
+    public void setShared(String playId) {
+        this.repository.setShared(playId);
     }
 }

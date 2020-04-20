@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import com.briefing_bingo.bingo.card.Card;
 import com.briefing_bingo.bingo.card.CardService;
-import com.briefing_bingo.bingo.phrases.Phrase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -37,8 +35,9 @@ public class MainController {
         return new ModelAndView("frontend.jsp");
     }
 
-    @GetMapping("/close")
-    public String closeShareWindow() {
+    @GetMapping("/close/{playId}")
+    public String closeShareWindow(@PathVariable("playId") String playId) {
+        this.cardService.setShared(playId);
         return "closeMe.jsp";
     }
     

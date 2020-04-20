@@ -42,6 +42,8 @@ public class Phrase {
     @JsonIgnore
     private Integer checkedCount;
 
+    private Boolean inactive;
+
     public Phrase(String phrase, Integer count) {
         this.phrase = phrase;
         this.count = count;
@@ -52,5 +54,6 @@ public class Phrase {
         this.createdAt = new Date();
         if (this.count == null) this.count = 0;
         this.checkedCount = 0;
+        this.inactive = false;
     }
 }

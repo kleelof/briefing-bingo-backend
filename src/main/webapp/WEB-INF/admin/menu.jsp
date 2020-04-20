@@ -11,6 +11,9 @@
           <li class="nav-item active">
             <a class="nav-link" href="/admin/phrases">Phrases</a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/admin/cards">Bingo Cards</a>
+          </li>
         </ul>
         <form action="/logout" class="form-inline my-2 my-lg-0" form-method="get">
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

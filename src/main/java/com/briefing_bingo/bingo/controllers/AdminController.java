@@ -1,5 +1,9 @@
 package com.briefing_bingo.bingo.controllers;
 
+import javax.websocket.server.PathParam;
+
+import com.briefing_bingo.bingo.card.CardService;
+import com.briefing_bingo.bingo.card.CardStatsDTO;
 import com.briefing_bingo.bingo.phrases.Phrase;
 import com.briefing_bingo.bingo.phrases.PhraseService;
 
@@ -19,15 +23,12 @@ public class AdminController {
 
     @Autowired
     private PhraseService phraseService;
+    @Autowired
+    private CardService cardService;
 
     @GetMapping("")
     public String index() {
         return "admin/index.jsp";
-    }
-
-    @GetMapping("/phrases")
-    public ModelAndView phrases() {
-        return new ModelAndView("admin/phrases.jsp", "phrases", this.phraseService.findAll());
     }
 
     @PostMapping("/addPhrase")
@@ -38,9 +39,34 @@ public class AdminController {
         return new ModelAndView("redirect:/admin/phrases");
     }
     
-    @GetMapping("/deletePhrase/{id}")
-    public String deletePhrase(@PathVariable Long id) {
-        this.phraseService.delete(id);
+    @GetMapping("/cards")
+    public ModelAndView cards(){
+        CardStatsDTO DTO = this.cardService.getStats();
+        DTO.cards = this.cardService.findAll();
+        return new ModelAndView("admin/cards.jsp", "DTO", DTO );
+    }
+
+    @GetMapping("/phrase/deactivate/{id}")
+    public String deactivatePhrase(@PathVariable Long id) {
+        this.phraseService.deactivate(id);
         return "redirect:/admin/phrases";
     }
+
+    @GetMapping("/phrase/activate/{id}")
+    public String activatePhrase(@PathVariable Long id) {
+        this.phraseService.activate(id);
+        return "redirect:/admin/phrases";
+    }
+
+    @GetMapping("/phrases")
+    public ModelAndView phrases() {
+        return new ModelAndView("admin/phrases.jsp", "phrases", this.phraseService.findAllAlphabetical());
+    }
+
+    @GetMapping("/phrase/update/{id}")
+    public String updatePhrase(@PathVariable("id") Long id, @PathParam("phrase") String phrase) {
+        this.phraseService.updatePhrase(id, phrase);
+        return "redirect:/admin/phrases";
+    }
+
 }

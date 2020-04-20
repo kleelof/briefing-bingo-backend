@@ -44,11 +44,13 @@ public class Card {
 
     private Boolean hasBingo;
     private String playId;
+    private Boolean shared;
 
     @PrePersist
     protected void onCreate(){
         this.createdAt = new Date();
         this.hasBingo = false;
         this.playId = UUID.randomUUID().toString();
+        this.shared = false;
     }
 }

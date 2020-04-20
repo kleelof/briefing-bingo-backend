@@ -15,9 +15,23 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     @Query("FROM Card c WHERE c.playId = ?1")
     public Optional<Card> findCardByPlayId(String playId);
+
+    @Query("SELECT COUNT(c) FROM Card c WHERE c.hasBingo = TRUE")
+    public Integer getBingoCount();
+
+    @Query("SELECT COUNT(c) FROM Card c")
+    public Integer getNumberOfCardsIssued();
+
+    @Query("SELECT COUNT(c) FROM Card c WHERE c.shared = TRUE")
+    public Integer getSharedCount();
     
     @Modifying
     @Transactional
     @Query("UPDATE Card c SET c.hasBingo = TRUE WHERE c.playId = ?1")
     public void setBingo(String playId);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Card c SET c.shared = TRUE WHERE c.playId = ?1")
+    public void setShared(String playId);
 }
