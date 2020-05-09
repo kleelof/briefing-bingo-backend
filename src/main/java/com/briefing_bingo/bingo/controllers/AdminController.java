@@ -4,9 +4,13 @@ import javax.websocket.server.PathParam;
 
 import com.briefing_bingo.bingo.card.CardService;
 import com.briefing_bingo.bingo.card.CardStatsDTO;
+import com.briefing_bingo.bingo.card.CardsDataDTO;
 import com.briefing_bingo.bingo.phrases.Phrase;
 import com.briefing_bingo.bingo.phrases.PhraseService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +48,14 @@ public class AdminController {
         CardStatsDTO DTO = this.cardService.getStats();
         DTO.cards = this.cardService.findAll();
         return new ModelAndView("admin/cards.jsp", "DTO", DTO );
+    }
+
+    @GetMapping("/cardCharts")
+    public ModelAndView cardsCharts() throws JsonProcessingException {
+        DateTime now = new DateTime();
+        DateTime weekAgo = now.minusDays(7);
+        CardsDataDTO DTO = this.cardService.getCardsData(weekAgo.toLocalDate(), now.toLocalDate());
+        return new ModelAndView("admin/cardChart.jsp", "DTO", new ObjectMapper().writeValueAsString(DTO));
     }
 
     @GetMapping("/phrase/deactivate/{id}")

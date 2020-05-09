@@ -1,14 +1,21 @@
 package com.briefing_bingo.bingo.card;
 
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.briefing_bingo.bingo.phrases.Phrase;
 import com.briefing_bingo.bingo.phrases.PhraseService;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class CardService {
@@ -60,6 +67,33 @@ public class CardService {
 
     public CardStatsDTO getStats() {
         return new CardStatsDTO(this.repository.getNumberOfCardsIssued(), this.repository.getBingoCount(), this.repository.getSharedCount());
+    }
+
+    public CardsDataDTO getCardsData(LocalDate startDate, LocalDate endDate) {
+        CardsDataDTO DTO = new CardsDataDTO();
+
+        List<Card> cards = this.repository.pullByDateRange(Date.valueOf(startDate.toString()), Date.valueOf(endDate.toString()));
+
+        HashMap<LocalDate, CardsDataDayDTO> cardsByDates = new HashMap<LocalDate, CardsDataDayDTO>();
+
+        for (Card card : cards) {
+            LocalDate dateKey = new DateTime(card.getCreatedAt()).toLocalDate();
+            if (!cardsByDates.containsKey(dateKey))
+                cardsByDates.put(dateKey, new CardsDataDayDTO());
+                
+            CardsDataDayDTO dayBeingUpdated = cardsByDates.get(dateKey);
+            dayBeingUpdated.date = dateKey.toString();
+            dayBeingUpdated.numberOfCardsIssued ++;
+            dayBeingUpdated.numberOfBingos += card.getHasBingo() ? 1 : 0;
+            dayBeingUpdated.numberOfShares += card.getShared() != null && card.getShared() ? 1 : 0;
+        }
+
+        SortedSet<LocalDate> days = new TreeSet<>(cardsByDates.keySet());
+        for (LocalDate day : days) {
+            DTO.days.add(cardsByDates.get(day));
+        }
+
+        return DTO;
     }
 
     public Card save(Card card) {

@@ -1,5 +1,7 @@
 package com.briefing_bingo.bingo.card;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -24,6 +26,11 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     @Query("SELECT COUNT(c) FROM Card c WHERE c.shared = TRUE")
     public Integer getSharedCount();
+
+    @Query ("SELECT c FROM Card c WHERE c.createdAt >= ?1 AND c.createdAt <= ?2 ORDER BY c.createdAt")
+    public List<Card> pullByDateRange(Date startDate, Date endDate);
+
+    //public List<Card> findAllByCreatedAtGreaterThanEqualAndCreatedAtLessThanEqualCaseCreatedAt(Date startDate, Date endDate);
     
     @Modifying
     @Transactional
